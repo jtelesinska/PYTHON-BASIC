@@ -22,3 +22,16 @@ def generate_words(n=20):
         words.append(word)
 
     return words
+
+def write_files(words):
+    try:
+        with open("file1.txt", "w", encoding='utf-8') as file1, open("file2.txt", "w", encoding="cp1252") as file2:
+            file1.write("\n".join(words))
+            file2.write(",".join(words[::-1]))
+    except Exception as e:
+        print(str(e))
+
+
+if __name__ == "__main__":
+    words = generate_words()
+    write_files(words)
