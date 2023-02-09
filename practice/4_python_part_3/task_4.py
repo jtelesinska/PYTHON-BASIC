@@ -15,11 +15,24 @@ Example:
 """
 
 import argparse
+from faker import Faker
 
-
+def init_parser() -> argparse.Namespace:
+    parser = argparse.ArgumentParser()
+    parser.add_argument('number', type=int, help='Number of generated instances')
+    parser.add_argument('fields', nargs='+', help='Fields to generate')
+    return parser.parse_args()
 def print_name_address(args: argparse.Namespace) -> None:
-    ...
+    for i in range(args.number):
+        fake = Faker()
+        instance = {}
+        for field in args.fields:
+            key, provider = field.split('=')
+            instance[key] = getattr(fake, provider)()
+        print(instance)
 
+
+print_name_address(init_parser())
 
 """
 Write test for print_name_address function
