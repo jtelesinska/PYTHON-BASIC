@@ -10,12 +10,18 @@ If entered date is from future, return negative value for number of days
     >>> calculate_days('10-07-2021')
     WrongFormatException
 """
-from datetime import datetime
-
-
+from datetime import datetime, date
+class WrongFormatException(Exception):
+    pass
 def calculate_days(from_date: str) -> int:
-    ...
-
+    try:
+        date.fromisoformat(from_date)
+        entered_date = datetime.strptime(from_date, "%Y-%m-%d").date()
+        current_date = datetime.now().date()
+        delta = current_date - entered_date
+        return delta.days
+    except ValueError as e:
+        raise WrongFormatException("Invalid date format. Expecting ISO format (YYYY-MM-DD)") from e
 
 """
 Write tests for calculate_days function
