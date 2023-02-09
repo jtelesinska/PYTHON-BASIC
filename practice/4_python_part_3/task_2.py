@@ -11,10 +11,22 @@ Examples:
 """
 import math
 
+from inspect import getmembers, isbuiltin
 
-def math_calculate(function: str, *args):
-    ...
+math_functions = {f[0]: f[1] for f in getmembers(math, isbuiltin)}
 
+class OperationNotFoundException(Exception):
+    pass
+
+class IncorrectAmountOfArgumentsException(Exception):
+    pass
+def math_calculate(function_name: str, *args):
+    if function_name not in math_functions:
+        raise OperationNotFoundException
+    if 0 > len(args) > 2:
+        raise IncorrectAmountOfArgumentsException
+
+    return math_functions[function_name](*args)
 
 """
 Write tests for math_calculate function
