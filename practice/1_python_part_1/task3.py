@@ -16,4 +16,12 @@ from typing import Iterable
 
 
 def build_from_unique_words(*lines: Iterable[str], word_number: int) -> str:
-    ...
+    unique_text = ""
+    for text in lines:
+        try:
+            words = str(text).split()
+            unique_words = list(dict.fromkeys(words))
+            unique_text += f"{unique_words[word_number]} "
+        except IndexError:
+            pass
+    return unique_text.rstrip()
