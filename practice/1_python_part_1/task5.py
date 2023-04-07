@@ -13,4 +13,7 @@ Examples:
 
 
 def remove_duplicated_words(line: str) -> str:
-    ...
+    line = line.split()
+    unique_list = list(dict.fromkeys(line))
+    unique_words = ' '.join(unique_list)
+    return unique_words
